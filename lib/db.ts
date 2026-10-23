@@ -9,4 +9,3 @@ export const sql =
 
 if (process.env.NODE_ENV !== "production") globalForDb.sql = sql;
 
-console.log("DB host:", process.env.DATABASE_URL ? new URL(process.env.DATABASE_URL).host : "MISSING");
