@@ -4,8 +4,7 @@ import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/queries";
 import { formatPrice } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-
+import { AddToCartButton } from "@/components/add-to-cart-button";
 type Props = { params: Promise<{ slug: string }> };
 
 export default function ProductPage({ params }: Props) {
@@ -51,9 +50,16 @@ async function ProductDetail({ params }: Props) {
         )}
 
         <div className="mt-6 flex items-center gap-3">
-          <Button size="lg" disabled={soldOut}>
-            {soldOut ? "Sold out" : "Add to cart"}
-          </Button>
+          <AddToCartButton
+              product={{
+                productId: product.id,
+                slug: product.slug,
+                name: product.name,
+                priceCents: product.price_cents,
+                imageUrl: product.image_url,
+                stock: product.stock,
+               }}
+            />
           {!soldOut && <Badge variant="secondary">{product.stock} left</Badge>}
         </div>
       </div>
