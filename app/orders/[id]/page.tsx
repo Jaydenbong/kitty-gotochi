@@ -6,6 +6,7 @@ import { getOrder } from "@/lib/queries";
 import { buildPayNowPayload, getPayNowConfig } from "@/lib/paynow";
 import { formatPrice } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
+import { OrderStatusWatcher } from "@/components/order-status-watcher";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -41,6 +42,7 @@ async function OrderDetail({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-lg">
+      <OrderStatusWatcher orderId={order.id} status={order.status} />
       <p className="text-sm text-muted-foreground">Order #{order.order_number}</p>
       <div className="mt-1 flex flex-wrap items-center gap-3">
         <h1 className="text-2xl font-bold">Thanks, {order.customer_name}!</h1>
