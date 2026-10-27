@@ -2,43 +2,59 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart-provider";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
-
-type Form = { name: string; email: string; phone: string; address: string };
-type Errors = Partial<Record<keyof Form, string>>;
+import { validateCheckout, type CheckoutForm, type CheckoutErrors } from "@/lib/checkout";
 
 const inputClass =
   "w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring";
 
-function validate(form: Form): Errors {
-  const errors: Errors = {};
-  if (!form.name.trim()) errors.name = "Please enter your name";
-  if (!/^\S+@\S+\.\S+$/.test(form.email)) errors.email = "Please enter a valid email";
-  if (!/^[689]\d{7}$/.test(form.phone.replace(/\s/g, "")))
-    errors.phone = "Please enter an 8-digit Singapore number";
-  if (form.address.trim().length < 10) errors.address = "Please enter your full delivery address";
-  return errors;
-}
-
 export default function CheckoutPage() {
-  const { items, hydrated, totalCents } = useCart();
-  const [form, setForm] = useState<Form>({ name: "", email: "", phone: "", address: "" });
-  const [errors, setErrors] = useState<Errors>({});
+  const router = useRouter();
+  const { items, hydrated, totalCents, clearCart } = useCart();
+  const [form, setForm] = useState<CheckoutForm>({ name: "", email: "", phone: "", address: "" });
+  const [errors, setErrors] = useState<CheckoutErrors>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const found = validate(form);
+    const found = validateCheckout(form);
     setErrors(found);
     if (Object.keys(found).length > 0) return;
 
-    // Day 4: send the order to POST /api/orders
-    alert("Form looks good! Placing the order comes on Day 4.");
+    setSubmitting(true);
+    setServerError(null);
+    try {
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: form,
+          items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
+        }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setServerError(data.error ?? "Something went wrong");
+        if (data.fields) setErrors(data.fields);
+        return;
+      }
+
+      router.push(`/orders/${data.orderId}`);
+      clearCart();
+    } catch {
+      setServerError("Couldn't reach the server. Check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (!hydrated) return <p>Loading…</p>;
@@ -75,8 +91,12 @@ export default function CheckoutPage() {
           <textarea name="address" rows={3} value={form.address} onChange={handleChange} autoComplete="street-address" className={inputClass} />
         </Field>
 
-        <Button type="submit" size="lg" className="w-full">
-          Continue to payment
+        {serverError && (
+          <p className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-700">{serverError}</p>
+        )}
+
+        <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+          {submitting ? "Placing order…" : `Place order · ${formatPrice(totalCents)}`}
         </Button>
       </form>
 
