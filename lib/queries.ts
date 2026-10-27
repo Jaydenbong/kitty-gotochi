@@ -1,4 +1,5 @@
 import { sql } from "./db";
+import { isUuid } from "./checkout";
 
 export type Product = {
   id: string;
@@ -63,4 +64,40 @@ export async function getPrefectures() {
     left join products p on p.prefecture_id = pr.id and p.is_active
     order by pr.id
   `;
+}
+
+export type Order = {
+  id: string;
+  order_number: number;
+  customer_name: string;
+  total_cents: number;
+  payment_ref: string;
+  status: "pending_payment" | "paid" | "fulfilled" | "cancelled";
+  created_at: Date;
+};
+
+export type OrderItem = {
+  product_name: string;
+  unit_price_cents: number;
+  quantity: number;
+};
+
+export async function getOrder(id: string) {
+  if (!isUuid(id)) return null;
+
+  const [order] = await sql<Order[]>`
+    select id, order_number, customer_name, total_cents, payment_ref, status, created_at
+    from orders
+    where id = ${id}
+  `;
+  if (!order) return null;
+
+  const items = await sql<OrderItem[]>`
+    select product_name, unit_price_cents, quantity
+    from order_items
+    where order_id = ${id}
+    order by product_name
+  `;
+
+  return { ...order, items };
 }
