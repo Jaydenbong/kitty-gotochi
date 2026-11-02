@@ -31,13 +31,20 @@ async function OrderDetail({ params }: Props) {
   if (!order) notFound();
 
   let qr: string | null = null;
+  let qrFailed = false;
   if (order.status === "pending_payment") {
-    const payload = buildPayNowPayload({
-      ...getPayNowConfig(),
-      amountCents: order.total_cents,
-      reference: order.payment_ref,
-    });
-    qr = await QRCode.toDataURL(payload, { width: 320, margin: 1 });
+    // A payment setup problem shouldn't stop customers seeing their order
+    try {
+      const payload = buildPayNowPayload({
+        ...getPayNowConfig(),
+        amountCents: order.total_cents,
+        reference: order.payment_ref,
+      });
+      qr = await QRCode.toDataURL(payload, { width: 320, margin: 1 });
+    } catch (err) {
+      console.error(err);
+      qrFailed = true;
+    }
   }
 
   return (
@@ -68,13 +75,21 @@ async function OrderDetail({ params }: Props) {
             On your phone? Save the QR image
           </a>
           <p className="mt-1 text-xs text-muted-foreground">
-            Then open your banking app's PayNow scanner and choose the image from your gallery.
+            Then open your banking app&apos;s PayNow scanner and choose the image from your gallery.
           </p>
         </div>
       )}
 
+      {qrFailed && (
+        <p className="mt-6 rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-700">
+          We couldn&apos;t load the payment QR code. Your order is saved, so please refresh this page in a
+          little while. Your payment reference is{" "}
+          <span className="font-mono font-medium">{order.payment_ref}</span>.
+        </p>
+      )}
+
       {order.status === "paid" && (
-        <p className="mt-6 rounded-xl border p-4">Payment received. We're preparing your order!</p>
+        <p className="mt-6 rounded-xl border p-4">Payment received. We&apos;re preparing your order!</p>
       )}
       {order.status === "fulfilled" && (
         <p className="mt-6 rounded-xl border p-4">Your order is on its way.</p>
