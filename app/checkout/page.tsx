@@ -21,6 +21,7 @@ export default function CheckoutPage() {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: undefined }); // the old message no longer applies
   }
 
   async function handleSubmit(e: React.FormEvent) {
