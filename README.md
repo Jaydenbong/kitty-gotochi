@@ -8,17 +8,19 @@ Kittycat is an online shop for regional Japanese keychains, built for customers 
 
 I built it to solve the problems that make real commerce hard: two people buying the last item at the same moment, prices that can't be tampered with, and order records that stay accurate over time.
 
-**Status:** deployed and in active development, ahead of opening to customers.
+**Status:** deployed and in active development, ahead of opening to customers. Product images are sample illustrations for now.
 
-![Storefront showing keychains grouped by region of Japan](docs/screenshots/home.png)
+![Storefront section showing keychains for the Kansai region of Japan](docs/screenshots/home.png)
 
 | Product page | Checkout |
 | :---: | :---: |
 | ![Product page with price, stock and add to cart button](docs/screenshots/product.png) | ![Checkout form with inline validation messages](docs/screenshots/checkout.png) |
 
-| Cart | Order dashboard |
+| PayNow payment | Order dashboard |
 | :---: | :---: |
-| ![Cart with quantity controls and total](docs/screenshots/cart.png) | ![Admin dashboard listing orders by status](docs/screenshots/admin.png) |
+| ![Order page with a PayNow QR code](docs/screenshots/payment.png) | ![Admin dashboard listing orders by status](docs/screenshots/admin.png) |
+
+<sub>Screenshots use sample customer details and a non-working QR code.</sub>
 
 ## Features
 
