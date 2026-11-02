@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Sample keychain illustration">
+  <rect width="800" height="800" fill="#DDF2F0"/>
+  <g fill="none" stroke="#8A8F98" stroke-linecap="round">
+    <circle cx="400" cy="92" r="46" stroke-width="13"/>
+    <path d="M400 138V340" stroke-width="9" stroke-dasharray="14 15"/>
+  </g>
+  
+    <ellipse cx="400" cy="375" rx="80" ry="118" fill="#E8486F" transform="rotate(0 400 480)"/><ellipse cx="400" cy="375" rx="80" ry="118" fill="#E8486F" transform="rotate(72 400 480)"/><ellipse cx="400" cy="375" rx="80" ry="118" fill="#E8486F" transform="rotate(144 400 480)"/><ellipse cx="400" cy="375" rx="80" ry="118" fill="#E8486F" transform="rotate(216 400 480)"/><ellipse cx="400" cy="375" rx="80" ry="118" fill="#E8486F" transform="rotate(288 400 480)"/>
+    <circle cx="400" cy="480" r="42" fill="#A91E4D"/>
+    <path d="M400 480L490 395" stroke="#F7C948" stroke-width="13" stroke-linecap="round"/>
+    <circle cx="496" cy="388" r="15" fill="#F7C948"/>
+  <text x="400" y="755" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" letter-spacing="3" fill="#5F6368">SAMPLE IMAGE</text>
+</svg>

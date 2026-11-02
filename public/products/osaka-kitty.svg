@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Sample keychain illustration">
+  <rect width="800" height="800" fill="#FFF0CF"/>
+  <g fill="none" stroke="#8A8F98" stroke-linecap="round">
+    <circle cx="400" cy="92" r="46" stroke-width="13"/>
+    <path d="M400 138V340" stroke-width="9" stroke-dasharray="14 15"/>
+  </g>
+  
+    <g>
+      
+        <circle cx="315" cy="430" r="74" fill="#C9833A"/>
+        <path d="M265 408c26-30 74-30 100 0c-12 30-30 8-50 26s-38-2-50-26z" fill="#5A2E14"/>
+        <path d="M285 410q15 16 30 0t30 0" fill="none" stroke="#FFF6DE" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="485" cy="430" r="74" fill="#C9833A"/>
+        <path d="M435 408c26-30 74-30 100 0c-12 30-30 8-50 26s-38-2-50-26z" fill="#5A2E14"/>
+        <path d="M455 410q15 16 30 0t30 0" fill="none" stroke="#FFF6DE" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="400" cy="400" r="74" fill="#C9833A"/>
+        <path d="M350 378c26-30 74-30 100 0c-12 30-30 8-50 26s-38-2-50-26z" fill="#5A2E14"/>
+        <path d="M370 380q15 16 30 0t30 0" fill="none" stroke="#FFF6DE" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="400" cy="495" r="74" fill="#C9833A"/>
+        <path d="M350 473c26-30 74-30 100 0c-12 30-30 8-50 26s-38-2-50-26z" fill="#5A2E14"/>
+        <path d="M370 475q15 16 30 0t30 0" fill="none" stroke="#FFF6DE" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="290" cy="515" r="74" fill="#C9833A"/>
+        <path d="M240 493c26-30 74-30 100 0c-12 30-30 8-50 26s-38-2-50-26z" fill="#5A2E14"/>
+        <path d="M260 495q15 16 30 0t30 0" fill="none" stroke="#FFF6DE" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="510" cy="515" r="74" fill="#C9833A"/>
+        <path d="M460 493c26-30 74-30 100 0c-12 30-30 8-50 26s-38-2-50-26z" fill="#5A2E14"/>
+        <path d="M480 495q15 16 30 0t30 0" fill="none" stroke="#FFF6DE" stroke-width="7" stroke-linecap="round"/>
+    </g>
+    <path d="M205 520H595L540 650H260Z" fill="#E6C48F" stroke="#B48E58" stroke-width="10" stroke-linejoin="round"/>
+  <text x="400" y="755" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" letter-spacing="3" fill="#5F6368">SAMPLE IMAGE</text>
+</svg>
