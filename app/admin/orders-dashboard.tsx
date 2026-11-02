@@ -48,8 +48,6 @@ export function OrdersDashboard() {
   const [busyId, setBusyId] = useState<string | null>(null);
 
   const loadOrders = useCallback(async () => {
-    setLoading(true);
-    setError(null);
     try {
       const res = await fetch(`/api/admin/orders?status=${tab}`, { cache: "no-store" });
       if (res.status === 401) {
@@ -59,6 +57,7 @@ export function OrdersDashboard() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       setOrders(data.orders);
+      setError(null);
     } catch {
       setError("Couldn't load orders. Try again.");
     } finally {
@@ -67,8 +66,16 @@ export function OrdersDashboard() {
   }, [tab, router]);
 
   useEffect(() => {
+    // loadOrders only sets state after its fetch has finished
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadOrders();
   }, [loadOrders]);
+
+  function selectTab(next: Status | "all") {
+    if (next === tab) return;
+    setLoading(true);
+    setTab(next);
+  }
 
   async function updateStatus(order: AdminOrder, status: Status) {
     if (status === "cancelled" && !confirm(`Cancel order #${order.order_number}? Its stock will be returned.`)) {
@@ -117,7 +124,7 @@ export function OrdersDashboard() {
 
       <div className="mb-4 flex flex-wrap gap-2">
         {TABS.map((t) => (
-          <Button key={t.value} variant={tab === t.value ? "default" : "outline"} size="sm" onClick={() => setTab(t.value)}>
+          <Button key={t.value} variant={tab === t.value ? "default" : "outline"} size="sm" onClick={() => selectTab(t.value)}>
             {t.label}
           </Button>
         ))}
