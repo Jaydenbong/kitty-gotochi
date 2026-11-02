@@ -1,0 +1,60 @@
+-- Sample catalogue. Run this after schema.sql.
+
+insert into prefectures (id, name_en, name_ja, slug, region) values
+  (1, 'Hokkaido', '北海道', 'hokkaido', 'Hokkaido'),
+  (2, 'Aomori', '青森県', 'aomori', 'Tohoku'),
+  (3, 'Iwate', '岩手県', 'iwate', 'Tohoku'),
+  (4, 'Miyagi', '宮城県', 'miyagi', 'Tohoku'),
+  (5, 'Akita', '秋田県', 'akita', 'Tohoku'),
+  (6, 'Yamagata', '山形県', 'yamagata', 'Tohoku'),
+  (7, 'Fukushima', '福島県', 'fukushima', 'Tohoku'),
+  (8, 'Ibaraki', '茨城県', 'ibaraki', 'Kanto'),
+  (9, 'Tochigi', '栃木県', 'tochigi', 'Kanto'),
+  (10, 'Gunma', '群馬県', 'gunma', 'Kanto'),
+  (11, 'Saitama', '埼玉県', 'saitama', 'Kanto'),
+  (12, 'Chiba', '千葉県', 'chiba', 'Kanto'),
+  (13, 'Tokyo', '東京都', 'tokyo', 'Kanto'),
+  (14, 'Kanagawa', '神奈川県', 'kanagawa', 'Kanto'),
+  (15, 'Niigata', '新潟県', 'niigata', 'Chubu'),
+  (16, 'Toyama', '富山県', 'toyama', 'Chubu'),
+  (17, 'Ishikawa', '石川県', 'ishikawa', 'Chubu'),
+  (18, 'Fukui', '福井県', 'fukui', 'Chubu'),
+  (19, 'Yamanashi', '山梨県', 'yamanashi', 'Chubu'),
+  (20, 'Nagano', '長野県', 'nagano', 'Chubu'),
+  (21, 'Gifu', '岐阜県', 'gifu', 'Chubu'),
+  (22, 'Shizuoka', '静岡県', 'shizuoka', 'Chubu'),
+  (23, 'Aichi', '愛知県', 'aichi', 'Chubu'),
+  (24, 'Mie', '三重県', 'mie', 'Kansai'),
+  (25, 'Shiga', '滋賀県', 'shiga', 'Kansai'),
+  (26, 'Kyoto', '京都府', 'kyoto', 'Kansai'),
+  (27, 'Osaka', '大阪府', 'osaka', 'Kansai'),
+  (28, 'Hyogo', '兵庫県', 'hyogo', 'Kansai'),
+  (29, 'Nara', '奈良県', 'nara', 'Kansai'),
+  (30, 'Wakayama', '和歌山県', 'wakayama', 'Kansai'),
+  (31, 'Tottori', '鳥取県', 'tottori', 'Chugoku'),
+  (32, 'Shimane', '島根県', 'shimane', 'Chugoku'),
+  (33, 'Okayama', '岡山県', 'okayama', 'Chugoku'),
+  (34, 'Hiroshima', '広島県', 'hiroshima', 'Chugoku'),
+  (35, 'Yamaguchi', '山口県', 'yamaguchi', 'Chugoku'),
+  (36, 'Tokushima', '徳島県', 'tokushima', 'Shikoku'),
+  (37, 'Kagawa', '香川県', 'kagawa', 'Shikoku'),
+  (38, 'Ehime', '愛媛県', 'ehime', 'Shikoku'),
+  (39, 'Kochi', '高知県', 'kochi', 'Shikoku'),
+  (40, 'Fukuoka', '福岡県', 'fukuoka', 'Kyushu & Okinawa'),
+  (41, 'Saga', '佐賀県', 'saga', 'Kyushu & Okinawa'),
+  (42, 'Nagasaki', '長崎県', 'nagasaki', 'Kyushu & Okinawa'),
+  (43, 'Kumamoto', '熊本県', 'kumamoto', 'Kyushu & Okinawa'),
+  (44, 'Oita', '大分県', 'oita', 'Kyushu & Okinawa'),
+  (45, 'Miyazaki', '宮崎県', 'miyazaki', 'Kyushu & Okinawa'),
+  (46, 'Kagoshima', '鹿児島県', 'kagoshima', 'Kyushu & Okinawa'),
+  (47, 'Okinawa', '沖縄県', 'okinawa', 'Kyushu & Okinawa');
+
+insert into products (prefecture_id, name, slug, description, handmade_additions, price_cents, image_url, stock)
+select pr.id, v.name, v.slug, v.description, v.handmade_additions, v.price_cents, v.image_url, 10
+from (values
+  ('hokkaido', 'Hokkaido Gotochi Kitty', 'hokkaido-kitty', 'Kitty with Yubari melon.', 'Silver bell', 1500, '/products/hokkaido-kitty.svg'),
+  ('tokyo', 'Tokyo Gotochi Kitty', 'tokyo-kitty', 'Kitty with Tokyo Tower.', 'Lucky charm, gold bell', 1500, '/products/tokyo-kitty.svg'),
+  ('kyoto', 'Kyoto Gotochi Kitty', 'kyoto-kitty', 'Kitty in a maiko outfit.', 'Omamori charm', 1500, '/products/kyoto-kitty.svg'),
+  ('osaka', 'Osaka Gotochi Kitty', 'osaka-kitty', 'Kitty with takoyaki.', 'Red bell', 1500, '/products/osaka-kitty.svg')
+) as v (prefecture_slug, name, slug, description, handmade_additions, price_cents, image_url)
+join prefectures pr on pr.slug = v.prefecture_slug;
